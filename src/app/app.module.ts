@@ -5,16 +5,20 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { MaterialModule} from './material';
-
+import {AppRoutingModule, routingComponents} from './app-routing.module';
+import {LayoutModule} from '@angular/cdk/layout';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    routingComponents,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AppRoutingModule,
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

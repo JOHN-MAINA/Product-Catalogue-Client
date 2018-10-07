@@ -1,40 +1,66 @@
-<div class="container">
-  <div fxLayout="row">
+<!--<ng-container>-->
+<!--<div fxLayout="row">-->
+<!--<mat-toolbar color="primary">-->
+<!--<mat-toolbar-row>-->
+<!--<button mat-icon-button (click)="drawer.toggle()">-->
+<!--<mat-icon>menu</mat-icon>-->
+<!--</button>-->
+<!--<button mat-icon-button (click)="drawer.toggle()">-->
+<!--<mat-icon>arrow_back</mat-icon>-->
+<!--</button>-->
+
+<!--<span>Products Category Client</span>-->
+<!--<span class="example-spacer"></span>-->
+<!--</mat-toolbar-row>-->
+<!--</mat-toolbar>-->
+<!--</div>-->
+<!--<mat-drawer-container class="example-container" fxFlex="100%" style="width: 100%">-->
+<!--<mat-drawer #drawer class="" mode="over" fxFlex="100%">-->
+<!--<mat-nav-list>-->
+<!--<mat-list-item>-->
+<!--<a matLine href="/products">Products</a>-->
+<!--<button mat-icon-button >-->
+<!--<mat-icon>info</mat-icon>-->
+<!--</button>-->
+<!--</mat-list-item>-->
+<!--</mat-nav-list>-->
+<!--</mat-drawer>-->
+
+<!--<router-outlet></router-outlet>-->
+<!--</mat-drawer-container>-->
+
+<!--</ng-container>-->
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="/products">Products </a>
+      <a mat-list-item href="/products/add">Add Product</a>
+      <a mat-list-item href="/categories">Categories</a>
+      <a mat-list-item href="/categories/add">Add Category</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <mat-toolbar-row>
-        <button mat-icon-button (click)="drawer.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <button mat-icon-button (click)="drawer.toggle()">
-          <mat-icon>arrow_back</mat-icon>
-        </button>
-
-        <span>Third Line</span>
-        <span class="example-spacer"></span>
-      </mat-toolbar-row>
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>product-catalogue-client</span>
     </mat-toolbar>
-  </div>
-  <div fxLayout="row">
-    <mat-drawer-container class="example-container" fxFlex="100%">
-      <mat-drawer #drawer class="example-sidenav" mode="over" fxFlex="30%">
-        <mat-nav-list>
-          <mat-list-item>
-            <a matLine href="#">Some Link</a>
-            <button mat-icon-button >
-              <mat-icon>info</mat-icon>
-            </button>
-          </mat-list-item>
-        </mat-nav-list>
-      </mat-drawer>
-
-      <div class="example-sidenav-content">
-        <button type="button" mat-button (click)="drawer.toggle()">
-          Toggle sidenav
-        </button>
-      </div>
-    </mat-drawer-container>
-  </div>
-
-</div>
-
+    <!-- Add Content Here -->
+    <router-outlet style="background-color: maroon"></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
