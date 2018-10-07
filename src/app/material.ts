@@ -6,7 +6,7 @@ import {
   MatMenuModule,
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule, MatFormFieldModule, MatSelectModule, MatInputModule
 } from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -28,6 +28,9 @@ import { NgModule} from '@angular/core';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule
   ],
   exports: [
     MatButtonModule,
@@ -41,7 +44,10 @@ import { NgModule} from '@angular/core';
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule
   ]
 })
 export class MaterialModule { }
