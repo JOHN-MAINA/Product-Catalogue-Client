@@ -2,16 +2,16 @@
   <div *ngIf="!categoriesFetched" fxLayoutAlign="center center">
     <mat-spinner></mat-spinner>
   </div>
+
   <mat-card *ngIf="categoriesFetched">
     <mat-card-header>
-      <mat-card-title>Add A Product</mat-card-title>
+      <mat-card-title>Edit A Product</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form #productForm="ngForm">
         <mat-form-field class="full-width">
-          <input matInput placeholder="Product Name" name="name"
-                 pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$" #name="ngModel" [(ngModel)]="localProduct.name"
-                 required>
+          <input matInput placeholder="Product Name" pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$" name="name"
+                 [(ngModel)]="localProduct.name" #name="ngModel" required>
           <mat-error *ngIf="name.invalid && name.touched">Product name is required and must be a valid string
           </mat-error>
         </mat-form-field>
@@ -21,15 +21,14 @@
             <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
           </mat-select>
         </mat-form-field>
-
         <div fxLayout="row" fxLayoutAlign="left" fxLayoutGap="10px">
-          <button mat-raised-button color="primary" (click)="createProduct()" type="submit"
-                  [disabled]="productForm.form.invalid">
-            Submit
+          <button mat-raised-button color="primary" (click)="updateProduct()"
+                  [disabled]="productForm.form.invalid || updatingProduct">Submit
           </button>
         </div>
       </form>
     </mat-card-content>
   </mat-card>
 </div>
+
 

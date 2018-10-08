@@ -1,16 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {Category} from '../../../services/category';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Product} from '../../../services/product';
-import {ProductService} from '../../../services/product.service';
-import {CategoryService} from '../../../services/category.service';
 import {MatSnackBar} from '@angular/material';
+import {ProductService} from '../../../services/product.service';
+import {Category} from '../../../services/category';
+import {CategoryService} from '../../../services/category.service';
 
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.css']
 })
-export class AddProductComponent implements OnInit {
+export class EditProductComponent implements OnInit {
+  @Input() public product;
+  @Output() public productEvent = new EventEmitter();
 
   public categoriesFetched = false;
   public updatingProduct = false;
@@ -34,23 +36,22 @@ export class AddProductComponent implements OnInit {
   constructor(private productService: ProductService, private categoryService: CategoryService, public snackBar: MatSnackBar) {
   }
 
-  createProduct() {
+  updateProduct() {
     const category = {
       name: this.localProduct.name,
       category_id: this.localProduct.category_id
     };
 
-    this.productService.createProduct(category).subscribe(
+    this.productService.updateProduct(category, this.localProduct.id).subscribe(
       data => {
-        this.categoriesFetched = true;
-        this.localProduct.name = '';
-        this.snackBar.open('Product Added successfully', '', {
+        this.snackBar.open('Category Added successfully', '', {
           duration: 3000,
           verticalPosition: 'top'
         });
+
+        this.productEvent.emit(data);
       },
       error => {
-        this.categoriesFetched = true;
         this.snackBar.open(error, '', {
           duration: 3000
         });
@@ -58,6 +59,10 @@ export class AddProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.product.name) {
+      this.localProduct = this.product;
+    }
+
     this.categoryService.getCategories().subscribe(
       data => {
         this.categoriesFetched = true;

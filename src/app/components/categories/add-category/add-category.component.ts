@@ -18,7 +18,6 @@ export class AddCategoryComponent implements OnInit {
   }
 
   createCategory() {
-    console.log(this.categoryName);
     const category = {
       name: this.categoryName
     };

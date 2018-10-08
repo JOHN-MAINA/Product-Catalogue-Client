@@ -21,7 +21,7 @@ export class CategoriesListComponent implements OnInit {
   }
 
   categoryUpdated(category) {
-    this.categories = this.categories.filter(function (value, index, arr) {
+    this.categories = this.categories.filter(function (value) {
       if (value.id === category.id) {
         value = category;
       }
@@ -37,15 +37,12 @@ export class CategoriesListComponent implements OnInit {
         this.categories = this.categories.filter(function (value, index, arr) {
           return value.id !== id;
         });
-
       },
       error => {
         this.snackBar.open(error, '', {
           duration: 3000
         });
-      }
-    );
-    console.log(id);
+      });
   }
 
   editCategory(product) {
