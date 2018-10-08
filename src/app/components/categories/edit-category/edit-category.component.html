@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Edit A Category</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form #categoryForm="ngForm">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Category Name" pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$"
+               [(ngModel)]="localCategory.name" #name="ngModel" name="name" required>
+        <mat-error *ngIf="name.invalid && name.touched">Category name is required and must be a valid string</mat-error>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutAlign="left" fxLayoutGap="10px">
+        <button mat-raised-button color="primary" (click)="updateCategory()"
+                [disabled]="categoryForm.form.invalid || updatingCategory">Submit
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,17 +1,23 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Add A Category</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form>
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Product Name">
-      </mat-form-field>
+<div class="content" fxLayoutGap="20px">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Add A Category</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #categoryForm="ngForm" fxLayoutGap="20px">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Category Name" pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$"
+                 [(ngModel)]="categoryName" #name="ngModel" name="name" required>
+          <mat-error *ngIf="name.invalid && name.touched">Category is required and must be a valid string</mat-error>
+        </mat-form-field>
 
-      <div fxLayout="row" fxLayoutAlign="left" fxLayoutGap="10px">
-        <button mat-raised-button color="primary" type="submit">Submit</button>
-        <button mat-raised-button color="accent" type="reset">Reset</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+        <div fxLayout="row" fxLayoutAlign="left" fxLayoutGap="10px">
+          <button mat-raised-button color="primary" (click)="createCategory()" [disabled]="categoryForm.form.invalid">
+            Submit
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

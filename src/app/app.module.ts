@@ -7,10 +7,14 @@ import { AppComponent } from './app.component';
 import { MaterialModule} from './material';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {LayoutModule} from '@angular/cdk/layout';
+import {HttpClientModule} from '@angular/common/http';
+import {EditCategoryComponent} from './components/categories/edit-category/edit-category.component';
+import {FormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
+    EditCategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -18,7 +22,9 @@ import {LayoutModule} from '@angular/cdk/layout';
     MaterialModule,
     FlexLayoutModule,
     AppRoutingModule,
-    LayoutModule
+    LayoutModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

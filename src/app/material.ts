@@ -6,7 +6,7 @@ import {
   MatMenuModule,
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule, MatFormFieldModule, MatSelectModule, MatInputModule
+  MatSortModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatSnackBarModule, MatProgressSpinnerModule
 } from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -30,7 +30,9 @@ import { NgModule} from '@angular/core';
     MatSortModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -47,7 +49,9 @@ import { NgModule} from '@angular/core';
     MatSortModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule { }
