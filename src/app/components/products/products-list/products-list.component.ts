@@ -18,8 +18,19 @@ export class ProductsListComponent implements OnInit {
   productsCount = 100;
   pageSize = 10;
   page = 0;
+  sort = 'name';
+  sort_dir = 'desc';
 
   constructor(private productService: ProductService, public snackBar: MatSnackBar) {
+  }
+
+  sortProducts(event) {
+    console.log(event);
+    if (event.direction !== '') {
+      this.sort = event.active;
+      this.sort_dir = event.direction;
+      this.fetchProducts();
+    }
   }
 
   paginate(event) {
@@ -43,7 +54,8 @@ export class ProductsListComponent implements OnInit {
   fetchProducts() {
     const queryParams = {
       params: {
-        sort_dir: 'desc',
+        sort_dir: this.sort_dir,
+        sort: this.sort,
         count: this.pageSize,
         offset: (this.page * this.pageSize),
       }
