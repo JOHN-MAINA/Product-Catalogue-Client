@@ -20,24 +20,28 @@
     </ng-container>
 
     <ng-container matColumnDef="created_at">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At</th>
       <td mat-cell *matCellDef="let element"> {{element.created_at | date: 'medium'}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="editProduct(element)">
-          <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+        <button mat-icon-button color="primary" (click)="editProduct(element)"
+                matTooltip="Edit this product"
+                matTooltipPosition="above">
+          <mat-icon aria-label="icon-button with a heart icon">edit</mat-icon>
         </button>
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="warn" (click)="deleteProduct(element.id)">
-          <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"
+          matTooltip="Delete this product"
+          matTooltipPosition="above">
+        <button mat-icon-button color="warn" (click)="deleteProduct(element.id)" class="low-z-index">
+          <mat-icon aria-label="icon-button with a heart icon">delete</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -45,5 +49,12 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <mat-paginator class="mat-elevation-z8 full-width"
+                 [length]="productsCount"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="paginate($event)">
+  </mat-paginator>
 </div>
 

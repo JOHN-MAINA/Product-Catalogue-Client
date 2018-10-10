@@ -8,3 +8,8 @@ export interface Product {
   category_id: number;
   updated_at: string;
 }
+
+export interface ProductWithCount {
+  products: Product[];
+  products_count: number;
+}

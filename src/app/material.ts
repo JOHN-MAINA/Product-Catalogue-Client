@@ -6,7 +6,7 @@ import {
   MatMenuModule,
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatSnackBarModule, MatProgressSpinnerModule
+  MatSortModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatSnackBarModule, MatProgressSpinnerModule, MatTooltipModule
 } from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -20,6 +20,7 @@ import { NgModule} from '@angular/core';
     MatCheckboxModule,
     MatIconModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
@@ -39,6 +40,7 @@ import { NgModule} from '@angular/core';
     MatCheckboxModule,
     MatIconModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatSidenavModule,
     MatListModule,
     MatGridListModule,

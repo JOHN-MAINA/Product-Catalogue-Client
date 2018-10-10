@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {globals} from '../config/env';
 import {Observable, throwError} from 'rxjs';
-import {Product} from './product';
+import {Product, ProductWithCount} from './product';
 import {catchError} from 'rxjs/operators';
 
 @Injectable({
@@ -17,8 +17,9 @@ export class ProductService {
     return globals.SERVER_URL + endpoint;
   }
 
-  getProducts(params): Observable<Product[]> {
-    return this.http.get<Product[]>(this.getFullPath('products'))
+  getProducts(params): Observable<ProductWithCount> {
+    // @ts-ignore
+    return this.http.get<ProductWithCount>(this.getFullPath('products'), params)
       .pipe(
         catchError(this.handleError)
       );

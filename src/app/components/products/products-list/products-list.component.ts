@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from '../../../services/product';
+import {Product, ProductWithCount} from '../../../services/product';
 import {MatSnackBar} from '@angular/material';
 import {ProductService} from '../../../services/product.service';
 
@@ -11,13 +11,22 @@ import {ProductService} from '../../../services/product.service';
 export class ProductsListComponent implements OnInit {
   public productsFetched = false;
   public editingProduct = false;
-  public countPerPage = 10;
-  public page = 1;
   displayedColumns: string[] = ['name', 'category', 'created_at', 'edit', 'delete'];
-  public products: Product[] = [];
+  public products: Product[];
   public selectedProduct;
 
+  productsCount = 100;
+  pageSize = 10;
+  page = 0;
+
   constructor(private productService: ProductService, public snackBar: MatSnackBar) {
+  }
+
+  paginate(event) {
+    this.pageSize = event.pageSize;
+    this.page = event.pageIndex;
+    this.productsFetched = false;
+    this.fetchProducts();
   }
 
   productUpdated(product) {
@@ -29,6 +38,28 @@ export class ProductsListComponent implements OnInit {
     });
 
     this.editingProduct = false;
+  }
+
+  fetchProducts() {
+    const queryParams = {
+      params: {
+        sort_dir: 'desc',
+        count: this.pageSize,
+        offset: (this.page * this.pageSize),
+      }
+    };
+    this.productService.getProducts(queryParams).subscribe(
+      data => {
+        this.productsFetched = true;
+        this.products = data.products;
+        this.productsCount = data.products_count;
+      },
+      error => {
+        this.productsFetched = true;
+        this.snackBar.open(error, '', {
+          duration: 3000
+        });
+      });
   }
 
   editProduct(product) {
@@ -51,25 +82,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    const queryParams = {
-      params: {
-        sort_dir: 'desc',
-        count: this.countPerPage,
-        offset: this.page === 1 ? 0 : (this.page - 1) * this.countPerPage,
-      }
-    };
-    this.productService.getProducts(queryParams).subscribe(
-      data => {
-        this.productsFetched = true;
-        this.products = data;
-      },
-      error => {
-        this.productsFetched = true;
-        this.snackBar.open(error, '', {
-          duration: 3000
-        });
-      }
-    );
+    this.fetchProducts();
   }
 
 }
