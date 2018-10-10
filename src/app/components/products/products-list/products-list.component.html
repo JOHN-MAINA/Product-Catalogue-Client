@@ -1,60 +1,82 @@
-<div class="content" fxLayoutGap="20px">
-  <div *ngIf="!productsFetched" fxLayoutAlign="center center">
-    <mat-spinner></mat-spinner>
-  </div>
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>Products</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="content" fxLayoutGap="20px">
+      <div *ngIf="!productsFetched" fxLayoutAlign="center center">
+        <mat-spinner></mat-spinner>
+      </div>
 
-  <app-edit-product (productEvent)="productUpdated($event)" [product]="selectedProduct"
-                    *ngIf="editingProduct"></app-edit-product>
 
-  <table mat-table [dataSource]="products" class="mat-elevation-z8" matSort
-         *ngIf="productsFetched && !editingProduct" (matSortChange)="sortProducts($event)">
+      <app-edit-product (productEvent)="productUpdated($event)" [product]="selectedProduct"
+                        *ngIf="editingProduct"></app-edit-product>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
-    </ng-container>
+      <div *ngIf="productsFetched && !editingProduct">
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field class="example-full-width" fxFlex="70">
+            <input matInput placeholder="Search By Name Or Category" [(ngModel)]="search"
+                   pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$" #name="ngModel" name="search" required>
+            <mat-error *ngIf="name.invalid && name.touched">Search Phrase is required and must be a valid string
+            </mat-error>
+          </mat-form-field>
+          <div>
+            <button mat-stroked-button color="primary" (click)="searchProduct()" [disabled]="name.invalid ">Search
+            </button>
+          </div>
+        </div>
+        <table mat-table [dataSource]="products" matSort
+               (matSortChange)="sortProducts($event)">
 
-    <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef> Category</th>
-      <td mat-cell *matCellDef="let element"> {{element.category.name}}</td>
-    </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+          </ng-container>
 
-    <ng-container matColumnDef="created_at">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At</th>
-      <td mat-cell *matCellDef="let element"> {{element.created_at | date: 'medium'}}</td>
-    </ng-container>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef> Category</th>
+            <td mat-cell *matCellDef="let element"> {{element.category.name}}</td>
+          </ng-container>
 
-    <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="editProduct(element)"
-                matTooltip="Edit this product"
+          <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At</th>
+            <td mat-cell *matCellDef="let element"> {{element.created_at | date: 'medium'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="editProduct(element)"
+                      matTooltip="Edit this product"
+                      matTooltipPosition="above">
+                <mat-icon aria-label="icon-button with a heart icon">edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"
+                matTooltip="Delete this product"
                 matTooltipPosition="above">
-          <mat-icon aria-label="icon-button with a heart icon">edit</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+              <button mat-icon-button color="warn" (click)="deleteProduct(element.id)" class="low-z-index">
+                <mat-icon aria-label="icon-button with a heart icon">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-    <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element"
-          matTooltip="Delete this product"
-          matTooltipPosition="above">
-        <button mat-icon-button color="warn" (click)="deleteProduct(element.id)" class="low-z-index">
-          <mat-icon aria-label="icon-button with a heart icon">delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator class="mat-elevation-z8 full-width"
-                 [length]="productsCount"
-                 [pageSize]="pageSize"
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 (page)="paginate($event)">
-  </mat-paginator>
-</div>
+        <mat-paginator class="full-width"
+                       [length]="productsCount"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="[5, 10, 25, 100]"
+                       (page)="paginate($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
 

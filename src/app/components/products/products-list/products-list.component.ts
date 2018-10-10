@@ -11,26 +11,31 @@ import {ProductService} from '../../../services/product.service';
 export class ProductsListComponent implements OnInit {
   public productsFetched = false;
   public editingProduct = false;
-  displayedColumns: string[] = ['name', 'category', 'created_at', 'edit', 'delete'];
   public products: Product[];
   public selectedProduct;
 
+  displayedColumns: string[] = ['name', 'category', 'created_at', 'edit', 'delete'];
   productsCount = 100;
   pageSize = 10;
   page = 0;
   sort = 'name';
   sort_dir = 'desc';
+  search = '';
+  searchPhraseInvalid = false;
 
   constructor(private productService: ProductService, public snackBar: MatSnackBar) {
   }
 
   sortProducts(event) {
-    console.log(event);
     if (event.direction !== '') {
       this.sort = event.active;
       this.sort_dir = event.direction;
       this.fetchProducts();
     }
+  }
+
+  searchProduct() {
+    this.fetchProducts();
   }
 
   paginate(event) {
@@ -58,6 +63,7 @@ export class ProductsListComponent implements OnInit {
         sort: this.sort,
         count: this.pageSize,
         offset: (this.page * this.pageSize),
+        search: this.search
       }
     };
     this.productService.getProducts(queryParams).subscribe(

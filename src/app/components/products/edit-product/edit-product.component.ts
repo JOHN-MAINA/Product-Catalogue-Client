@@ -44,7 +44,7 @@ export class EditProductComponent implements OnInit {
 
     this.productService.updateProduct(category, this.localProduct.id).subscribe(
       data => {
-        this.snackBar.open('Category Added successfully', '', {
+        this.snackBar.open('Product Updated successfully', '', {
           duration: 3000,
           verticalPosition: 'top'
         });
