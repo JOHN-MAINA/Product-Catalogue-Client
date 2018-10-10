@@ -1,6 +1,6 @@
 # ProductCatalogueClient
 
-##Installation Instructions
+## Installation Instructions
 
 1. clone the repository using
 

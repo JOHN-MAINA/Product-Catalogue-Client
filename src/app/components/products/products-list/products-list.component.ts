@@ -11,10 +11,11 @@ import {ProductService} from '../../../services/product.service';
 export class ProductsListComponent implements OnInit {
   public productsFetched = false;
   public editingProduct = false;
+  public viewingProductDetails = false;
   public products: Product[];
   public selectedProduct;
 
-  displayedColumns: string[] = ['name', 'category', 'created_at', 'edit', 'delete'];
+  displayedColumns: string[] = ['name', 'category', 'created_at', 'edit', 'visibility', 'delete'];
   productsCount = 100;
   pageSize = 10;
   page = 0;
@@ -45,6 +46,11 @@ export class ProductsListComponent implements OnInit {
     this.fetchProducts();
   }
 
+  showDetails(product) {
+    this.selectedProduct = product;
+    this.viewingProductDetails = true;
+  }
+
   productUpdated(product) {
     this.products = this.products.filter(function (value) {
       if (value.id === product.id) {
@@ -54,6 +60,10 @@ export class ProductsListComponent implements OnInit {
     });
 
     this.editingProduct = false;
+  }
+
+  doneViewingDetails() {
+    this.viewingProductDetails = false;
   }
 
   fetchProducts() {
