@@ -4,7 +4,7 @@ export interface Product {
   id: number;
   name: string;
   category: Category;
-  create_at: string;
+  created_at: string;
   category_id: number;
   updated_at: string;
 }

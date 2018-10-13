@@ -12,7 +12,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   headBack() {
-
+    this.productEvent.emit();
   }
 
   ngOnInit() {

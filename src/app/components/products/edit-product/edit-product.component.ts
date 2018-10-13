@@ -25,10 +25,11 @@ export class EditProductComponent implements OnInit {
     category: {
       id: 0,
       name: '',
-      create_at: '',
+      created_at: '',
+      updated_at: '',
       product_count: 0
     },
-    create_at: '',
+    created_at: '',
     updated_at: '',
     category_id: 0
   };

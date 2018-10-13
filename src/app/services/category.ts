@@ -2,5 +2,6 @@ export interface Category {
   id: number;
   name: string;
   product_count: number;
-  create_at: string;
+  created_at: string;
+  updated_at: string;
 }
