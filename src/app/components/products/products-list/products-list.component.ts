@@ -42,7 +42,6 @@ export class ProductsListComponent implements OnInit {
   paginate(event) {
     this.pageSize = event.pageSize;
     this.page = event.pageIndex;
-    this.productsFetched = false;
     this.fetchProducts();
   }
 
