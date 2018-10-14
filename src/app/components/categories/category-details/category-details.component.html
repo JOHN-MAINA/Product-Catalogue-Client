@@ -12,31 +12,22 @@
     </mat-card-header>
     <mat-card-content>
       <div class="content" fxLayoutGap="20px">
-        <mat-card fxFlex="100">
-          <mat-card-header>
-            <mat-card-title>Details</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-
-            <div fxLayout="row" fxLayoutGap="20px">
-              <strong>Name: </strong>
-              <span>{{category.name}}</span>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px">
-              <strong>Product Count: </strong>
-              <span>{{category.product_count}}</span>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px">
-              <strong>Date Created: </strong>
-              <span>{{category.created_at | date: 'medium'}}</span>
-            </div>
-            <div fxLayout="row" fxLayoutGap="20px">
-              <strong>Last Updated: </strong>
-              <span>{{category.updated_at | date: 'medium'}}</span>
-            </div>
-
-          </mat-card-content>
-        </mat-card>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <strong>Name: </strong>
+          <span>{{category.name}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <strong>Product Count: </strong>
+          <span>{{category.product_count}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <strong>Date Created: </strong>
+          <span>{{category.created_at | date: 'medium'}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <strong>Last Updated: </strong>
+          <span>{{category.updated_at | date: 'medium'}}</span>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>
