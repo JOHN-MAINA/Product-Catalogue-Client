@@ -14,6 +14,16 @@
                             (doneViewingDetailsEvent)="doneViewingDetails()"></app-category-details>
 
       <div *ngIf="categoriesFetched && !editingCategory && !showingCategoryDetails">
+
+        <div
+          style="z-index:5; position:fixed;display:flex;align-self: flex-end;bottom: 10%; right: 15px; margin-bottom:15px;">
+          <a mat-mini-fab routerLink="/products/add" style="margin-right : 14px;"
+             matTooltip="Add a category"
+             matTooltipPosition="above">
+            <mat-icon>add</mat-icon>
+          </a>
+        </div>
+
         <app-search (searchEvent)="searchCategory($event)" [placeHolder]="placeholder"></app-search>
         <table mat-table [dataSource]="categories" matSort>
 

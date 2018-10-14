@@ -11,6 +11,9 @@ import {Category} from '../../../services/category';
 })
 export class CategoriesListComponent implements OnInit {
 
+  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) {
+  }
+
   public displayedColumns: string[] = ['name', 'product_count', 'created_at', 'edit', 'visibility', 'delete'];
 
   public categoriesFetched = false;
@@ -25,9 +28,6 @@ export class CategoriesListComponent implements OnInit {
   sort = 'name';
   sort_dir = 'desc';
   public categoriesCount = 0;
-
-  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) {
-  }
 
   doneViewingDetails() {
     this.showingCategoryDetails = false;

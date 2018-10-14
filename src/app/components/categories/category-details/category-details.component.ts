@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProductService} from '../../../services/product.service';
+import {Chart} from 'chart.js';
 
 @Component({
   selector: 'app-category-details',

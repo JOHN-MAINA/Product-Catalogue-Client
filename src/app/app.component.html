@@ -9,9 +9,7 @@
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLinkActive="active" routerLink="/products">Products </a>
-      <a mat-list-item routerLinkActive="active" routerLink="/products/add">Add Product</a>
       <a mat-list-item routerLinkActive="active" routerLink="/categories">Categories</a>
-      <a mat-list-item routerLinkActive="active" routerLink="/categories/add">Add Category</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -24,7 +22,7 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>product-catalogue-client</span>
+      <span>Product Catalogue Client</span>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet style="background-color: maroon"></router-outlet>
