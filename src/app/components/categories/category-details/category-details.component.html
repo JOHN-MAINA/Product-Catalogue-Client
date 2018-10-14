@@ -1,3 +1,49 @@
-<p>
-  category-details works!
-</p>
+<div fxLayout="column" fxLayoutGap="20px">
+  <div fxLayout="row">
+    <button mat-raised-button (click)="headBack()" color="primary">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{category.name}} Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="content" fxLayoutGap="20px">
+        <mat-card fxFlex="100">
+          <mat-card-header>
+            <mat-card-title>Details</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+
+            <div fxLayout="row" fxLayoutGap="20px">
+              <strong>Name: </strong>
+              <span>{{category.name}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="20px">
+              <strong>Date Created: </strong>
+              <span>{{category.created_at | date: 'medium'}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="20px">
+              <strong>Last Updated: </strong>
+              <span>{{category.updated_at | date: 'medium'}}</span>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <app-products-list [categoryId]="category.id"></app-products-list>
+
+  <div fxLayout="row">
+    <button mat-raised-button (click)="headBack()" color="primary">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+</div>
+

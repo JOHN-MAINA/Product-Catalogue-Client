@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ProductService} from '../../../services/product.service';
 
 @Component({
   selector: 'app-category-details',
@@ -7,10 +8,17 @@ import {Component, OnInit} from '@angular/core';
 })
 export class CategoryDetailsComponent implements OnInit {
 
-  constructor() {
+  @Input() public category;
+  @Output() public doneViewingDetailsEvent = new EventEmitter();
+
+  constructor(private productService: ProductService) {
   }
 
+  headBack() {
+    this.doneViewingDetailsEvent.emit();
+  }
   ngOnInit() {
+
   }
 
 }

@@ -11,13 +11,15 @@ import {Category} from '../../../services/category';
 })
 export class CategoriesListComponent implements OnInit {
 
-  public displayedColumns: string[] = ['name', 'product_count', 'created_at', 'edit', 'delete'];
+  public displayedColumns: string[] = ['name', 'product_count', 'created_at', 'edit', 'visibility', 'delete'];
 
   public categoriesFetched = false;
   public editingCategory = false;
+  public showingCategoryDetails = false;
   public search = '';
   public categories: Category[] = [];
   public selectedCategory;
+  placeholder = 'Search by category name';
   pageSize = 10;
   page = 0;
   sort = 'name';
@@ -25,6 +27,10 @@ export class CategoriesListComponent implements OnInit {
   public categoriesCount = 0;
 
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) {
+  }
+
+  doneViewingDetails() {
+    this.showingCategoryDetails = false;
   }
 
   paginateCategories(event) {
@@ -68,8 +74,14 @@ export class CategoriesListComponent implements OnInit {
     this.editingCategory = false;
   }
 
-  searchCategory() {
+  searchCategory(event) {
+    this.search = event;
+    this.fetchCategories();
+  }
 
+  showDetails(category) {
+    this.selectedCategory = category;
+    this.showingCategoryDetails = true;
   }
 
   deleteCategory(id) {

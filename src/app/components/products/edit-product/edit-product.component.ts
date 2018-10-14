@@ -64,7 +64,7 @@ export class EditProductComponent implements OnInit {
       this.localProduct = this.product;
     }
 
-    this.categoryService.getCategories().subscribe(
+    this.categoryService.getCategories({}).subscribe(
       data => {
         this.categoriesFetched = true;
         this.categories = data.categories;

@@ -1,0 +1,12 @@
+<div fxLayout="row" fxLayoutGap="10px">
+  <mat-form-field class="example-full-width" fxFlex="70">
+    <input matInput [placeholder]="placeHolder" [(ngModel)]="search"
+           pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$" #name="ngModel" name="search" required>
+    <mat-error *ngIf="name.invalid && name.touched">Search Phrase is required and must be a valid string
+    </mat-error>
+  </mat-form-field>
+  <div>
+    <button mat-stroked-button color="primary" (click)="emitSearchEvent()" [disabled]="name.invalid ">Search
+    </button>
+  </div>
+</div>

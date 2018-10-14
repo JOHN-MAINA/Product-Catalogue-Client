@@ -40,7 +40,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getCategories().subscribe(
+    this.categoryService.getCategories({}).subscribe(
       data => {
         this.categoriesFetched = true;
         this.categories = data.categories;

@@ -12,6 +12,7 @@ import {EditCategoryComponent} from './components/categories/edit-category/edit-
 import {FormsModule} from '@angular/forms';
 import {EditProductComponent} from './components/products/edit-product/edit-product.component';
 import {PaginatorComponent} from './components/templates/paginator/paginator.component';
+import {SearchComponent} from './components/templates/search/search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +20,7 @@ import {PaginatorComponent} from './components/templates/paginator/paginator.com
     EditCategoryComponent,
     EditProductComponent,
     PaginatorComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
