@@ -28,7 +28,7 @@ export class EditCategoryComponent implements OnInit {
     this.categoryService.updateCategory(category, this.localCategory.id).subscribe(
       data => {
         this.snackBar.open('Category Added successfully', '', {
-          duration: 3000,
+          duration: 5000,
           verticalPosition: 'top'
         });
 
@@ -36,7 +36,8 @@ export class EditCategoryComponent implements OnInit {
       },
       error => {
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }

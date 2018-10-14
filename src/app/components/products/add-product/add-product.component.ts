@@ -4,6 +4,7 @@ import {Product} from '../../../services/product';
 import {ProductService} from '../../../services/product.service';
 import {CategoryService} from '../../../services/category.service';
 import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
@@ -32,7 +33,11 @@ export class AddProductComponent implements OnInit {
     category_id: 0
   };
 
-  constructor(private productService: ProductService, private categoryService: CategoryService, public snackBar: MatSnackBar) {
+  constructor(
+    private productService: ProductService,
+    private categoryService: CategoryService,
+    public snackBar: MatSnackBar,
+    private router: Router) {
   }
 
   createProduct() {
@@ -46,14 +51,16 @@ export class AddProductComponent implements OnInit {
         this.categoriesFetched = true;
         this.localProduct.name = '';
         this.snackBar.open('Product Added successfully', '', {
-          duration: 3000,
+          duration: 5000,
           verticalPosition: 'top'
         });
+        this.router.navigate(['/products']);
       },
       error => {
         this.categoriesFetched = true;
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }
@@ -67,7 +74,8 @@ export class AddProductComponent implements OnInit {
       error => {
         this.categoriesFetched = true;
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }

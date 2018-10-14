@@ -46,7 +46,7 @@ export class EditProductComponent implements OnInit {
     this.productService.updateProduct(category, this.localProduct.id).subscribe(
       data => {
         this.snackBar.open('Product Updated successfully', '', {
-          duration: 3000,
+          duration: 5000,
           verticalPosition: 'top'
         });
 
@@ -54,7 +54,8 @@ export class EditProductComponent implements OnInit {
       },
       error => {
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }
@@ -72,7 +73,8 @@ export class EditProductComponent implements OnInit {
       error => {
         this.categoriesFetched = true;
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }

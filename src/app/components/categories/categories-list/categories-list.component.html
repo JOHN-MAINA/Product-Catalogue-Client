@@ -1,88 +1,91 @@
-<mat-card class="mat-elevation-z8" *ngIf="!viewingProductDetails">
-  <mat-card-header>
-    <mat-card-title>Categories</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="content" fxLayoutGap="20px">
-      <div *ngIf="!categoriesFetched" fxLayoutAlign="center center">
-        <mat-spinner></mat-spinner>
-      </div>
-
-      <app-edit-category (categoryEvent)="categoryUpdated($event)" [category]="selectedCategory"
-                         *ngIf="editingCategory"></app-edit-category>
-      <app-category-details *ngIf="showingCategoryDetails" [category]="selectedCategory"
-                            (doneViewingDetailsEvent)="doneViewingDetails()"></app-category-details>
-
-      <div *ngIf="categoriesFetched && !editingCategory && !showingCategoryDetails">
-
-        <div
-          style="z-index:5; position:fixed;display:flex;align-self: flex-end;bottom: 10%; right: 15px; margin-bottom:15px;">
-          <a mat-mini-fab routerLink="/products/add" style="margin-right : 14px;"
-             matTooltip="Add a category"
-             matTooltipPosition="above">
-            <mat-icon>add</mat-icon>
-          </a>
+<div class="content" fxLayoutGap="20px">
+  <mat-card class="mat-elevation-z8" *ngIf="!viewingProductDetails">
+    <mat-card-header>
+      <mat-card-title>Categories</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="content" fxLayoutGap="20px">
+        <div *ngIf="!categoriesFetched" fxLayoutAlign="center center">
+          <mat-spinner></mat-spinner>
         </div>
 
-        <app-search (searchEvent)="searchCategory($event)" [placeHolder]="placeholder"></app-search>
-        <table mat-table [dataSource]="categories" matSort>
+        <app-edit-category (categoryEvent)="categoryUpdated($event)" [category]="selectedCategory"
+                           *ngIf="editingCategory"></app-edit-category>
+        <app-category-details *ngIf="showingCategoryDetails" [category]="selectedCategory"
+                              (doneViewingDetailsEvent)="doneViewingDetails()"></app-category-details>
 
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.name}}</td>
-          </ng-container>
+        <div *ngIf="categoriesFetched && !editingCategory && !showingCategoryDetails">
 
-          <ng-container matColumnDef="product_count">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> No of Products</th>
-            <td mat-cell *matCellDef="let element"> {{element.product_count}}</td>
-          </ng-container>
+          <div
+            style="z-index:5; position:fixed;display:flex;align-self: flex-end;bottom: 10%; right: 15px; margin-bottom:15px;">
+            <a mat-mini-fab routerLink="/categories/add" style="margin-right : 14px;"
+               matTooltip="Add a category"
+               matTooltipPosition="above">
+              <mat-icon>add</mat-icon>
+            </a>
+          </div>
 
-          <ng-container matColumnDef="created_at">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At</th>
-            <td mat-cell *matCellDef="let element"> {{element.created_at | date: 'medium'}}</td>
-          </ng-container>
+          <app-search (searchEvent)="searchCategory($event)" [placeHolder]="placeholder"></app-search>
+          <table mat-table [dataSource]="categories" matSort (matSortChange)="sortCategories($event)">
 
-          <ng-container matColumnDef="edit">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="primary" (click)="editCategory(element)"
-                      matTooltip="Edit this category"
-                      matTooltipPosition="above">
-                <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+              <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+            </ng-container>
 
-          <ng-container matColumnDef="visibility">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element"
-                matTooltip="Show Details"
-                matTooltipPosition="above">
-              <button mat-icon-button color="accent" (click)="showDetails(element)">
-                <mat-icon aria-label="icon-button with a heart icon">visibility</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+            <ng-container matColumnDef="product_count">
+              <th mat-header-cell *matHeaderCellDef> No of Products</th>
+              <td mat-cell *matCellDef="let element"> {{element.product_count}}</td>
+            </ng-container>
 
-          <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="warn" (click)="deleteCategory(element.id)"
-                      [disabled]="element.product_count > 0"
-                      matTooltip="Delete this category"
-                      matTooltipPosition="above">
-                <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+            <ng-container matColumnDef="created_at">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At</th>
+              <td mat-cell *matCellDef="let element"> {{element.created_at | date: 'medium'}}</td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <app-paginator (paginateEvent)="paginateCategories($event)" [count]="categoriesCount"></app-paginator>
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="primary" (click)="editCategory(element)"
+                        matTooltip="Edit this category"
+                        matTooltipPosition="above">
+                  <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="visibility">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element"
+                  matTooltip="Show Details"
+                  matTooltipPosition="above">
+                <button mat-icon-button color="accent" (click)="showDetails(element)">
+                  <mat-icon aria-label="icon-button with a heart icon">visibility</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="warn" (click)="deleteCategory(element.id)"
+                        [disabled]="element.product_count > 0"
+                        matTooltip="Delete this category"
+                        matTooltipPosition="above">
+                  <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <app-paginator (paginateEvent)="paginateCategories($event)" [count]="categoriesCount"></app-paginator>
+        </div>
       </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>
+
 
 

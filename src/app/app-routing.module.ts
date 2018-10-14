@@ -6,6 +6,7 @@ import {AddCategoryComponent} from './components/categories/add-category/add-cat
 import {AddProductComponent} from './components/products/add-product/add-product.component';
 import {ProductDetailsComponent} from './components/products/product-details/product-details.component';
 import {ProductsListComponent} from './components/products/products-list/products-list.component';
+import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {path: '', component: ProductsListComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'products', component: ProductsListComponent},
   {path: 'categories/add', component: AddCategoryComponent},
   {path: 'categories', component: CategoriesListComponent},
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({

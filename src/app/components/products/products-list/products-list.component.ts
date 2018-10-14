@@ -88,7 +88,8 @@ export class ProductsListComponent implements OnInit {
       error => {
         this.productsFetched = true;
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }
@@ -107,7 +108,8 @@ export class ProductsListComponent implements OnInit {
       },
       error => {
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }

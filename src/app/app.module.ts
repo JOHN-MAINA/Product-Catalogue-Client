@@ -13,6 +13,7 @@ import {FormsModule} from '@angular/forms';
 import {EditProductComponent} from './components/products/edit-product/edit-product.component';
 import {PaginatorComponent} from './components/templates/paginator/paginator.component';
 import {SearchComponent} from './components/templates/search/search.component';
+import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +21,8 @@ import {SearchComponent} from './components/templates/search/search.component';
     EditCategoryComponent,
     EditProductComponent,
     PaginatorComponent,
-    SearchComponent
+    SearchComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -25,7 +25,7 @@ export class CategoriesListComponent implements OnInit {
   placeholder = 'Search by category name';
   pageSize = 10;
   page = 0;
-  sort = 'name';
+  sort = 'created_at';
   sort_dir = 'desc';
   public categoriesCount = 0;
 
@@ -37,6 +37,14 @@ export class CategoriesListComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.page = event.pageIndex;
     this.fetchCategories();
+  }
+
+  sortCategories(event) {
+    if (event.direction !== '') {
+      this.sort = event.active;
+      this.sort_dir = event.direction;
+      this.fetchCategories();
+    }
   }
 
   fetchCategories() {
@@ -58,7 +66,8 @@ export class CategoriesListComponent implements OnInit {
       error => {
         this.categoriesFetched = true;
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }
@@ -93,7 +102,8 @@ export class CategoriesListComponent implements OnInit {
       },
       error => {
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }

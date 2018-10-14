@@ -3,6 +3,7 @@ import {CategoryService} from '../../../services/category.service';
 import {Category} from '../../../services/category';
 import {MatSnackBar} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -14,7 +15,7 @@ export class AddCategoryComponent implements OnInit {
   public categories: Category[] = [];
   public categoryName = '';
 
-  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) {
+  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar, private router: Router) {
   }
 
   createCategory() {
@@ -27,14 +28,16 @@ export class AddCategoryComponent implements OnInit {
         this.categoriesFetched = true;
         this.categoryName = '';
         this.snackBar.open('Category Added successfully', '', {
-          duration: 3000,
+          duration: 5000,
           verticalPosition: 'top'
         });
+        this.router.navigate(['/categories']);
       },
       error => {
         this.categoriesFetched = true;
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }
@@ -48,7 +51,8 @@ export class AddCategoryComponent implements OnInit {
       error => {
         this.categoriesFetched = true;
         this.snackBar.open(error, '', {
-          duration: 3000
+          duration: 5000,
+          verticalPosition: 'top'
         });
       });
   }
