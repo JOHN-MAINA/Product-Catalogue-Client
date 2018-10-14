@@ -11,13 +11,50 @@ import {Category} from '../../../services/category';
 })
 export class CategoriesListComponent implements OnInit {
 
+  public displayedColumns: string[] = ['name', 'product_count', 'created_at', 'edit', 'delete'];
+
   public categoriesFetched = false;
   public editingCategory = false;
-  displayedColumns: string[] = ['name', 'product_count', 'created_at', 'edit', 'delete'];
+  public search = '';
   public categories: Category[] = [];
   public selectedCategory;
+  pageSize = 10;
+  page = 0;
+  sort = 'name';
+  sort_dir = 'desc';
+  public categoriesCount = 0;
 
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) {
+  }
+
+  paginateCategories(event) {
+    this.pageSize = event.pageSize;
+    this.page = event.pageIndex;
+    this.fetchCategories();
+  }
+
+  fetchCategories() {
+    const queryParams = {
+      params: {
+        sort_dir: this.sort_dir,
+        sort: this.sort,
+        count: this.pageSize,
+        offset: (this.page * this.pageSize),
+        search: this.search
+      }
+    };
+    this.categoryService.getCategories(queryParams).subscribe(
+      data => {
+        this.categoriesFetched = true;
+        this.categoriesCount = data.category_count;
+        this.categories = data.categories;
+      },
+      error => {
+        this.categoriesFetched = true;
+        this.snackBar.open(error, '', {
+          duration: 3000
+        });
+      });
   }
 
   categoryUpdated(category) {
@@ -29,6 +66,10 @@ export class CategoriesListComponent implements OnInit {
     });
 
     this.editingCategory = false;
+  }
+
+  searchCategory() {
+
   }
 
   deleteCategory(id) {
@@ -51,17 +92,7 @@ export class CategoriesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getCategories().subscribe(
-      data => {
-        this.categoriesFetched = true;
-        this.categories = data;
-      },
-      error => {
-        this.categoriesFetched = true;
-        this.snackBar.open(error, '', {
-          duration: 3000
-        });
-      });
+    this.fetchCategories();
   }
 
 }

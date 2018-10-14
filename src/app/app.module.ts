@@ -11,12 +11,14 @@ import {HttpClientModule} from '@angular/common/http';
 import {EditCategoryComponent} from './components/categories/edit-category/edit-category.component';
 import {FormsModule} from '@angular/forms';
 import {EditProductComponent} from './components/products/edit-product/edit-product.component';
+import {PaginatorComponent} from './components/templates/paginator/paginator.component';
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     EditCategoryComponent,
     EditProductComponent,
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,

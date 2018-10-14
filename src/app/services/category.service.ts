@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {Category} from './category';
+import {Category, CategoryWithCount} from './category';
 import {globals} from '../config/env';
 
 @Injectable({
@@ -17,8 +17,9 @@ export class CategoryService {
     return globals.SERVER_URL + endpoint;
   }
 
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.getFullPath('categories'))
+  getCategories(params): Observable<CategoryWithCount> {
+    // @ts-ignore
+    return this.http.get<CategoryWithCount>(this.getFullPath('categories'), params)
       .pipe(
         catchError(this.handleError)
       );

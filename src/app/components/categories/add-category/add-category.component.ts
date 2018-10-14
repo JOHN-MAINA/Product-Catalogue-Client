@@ -43,7 +43,7 @@ export class AddCategoryComponent implements OnInit {
     this.categoryService.getCategories().subscribe(
       data => {
         this.categoriesFetched = true;
-        this.categories = data;
+        this.categories = data.categories;
       },
       error => {
         this.categoriesFetched = true;
