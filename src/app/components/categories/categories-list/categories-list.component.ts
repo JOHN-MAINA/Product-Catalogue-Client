@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {CategoryService} from '../../../services/category.service';
 import {MatSnackBar} from '@angular/material';
 import {Category} from '../../../services/category';
+import {Chart} from 'chart.js';
+import {element} from 'protractor';
 
 // @ts-ignore
 @Component({
@@ -9,6 +11,7 @@ import {Category} from '../../../services/category';
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.css']
 })
+
 export class CategoriesListComponent implements OnInit {
 
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) {
@@ -22,12 +25,28 @@ export class CategoriesListComponent implements OnInit {
   public search = '';
   public categories: Category[] = [];
   public selectedCategory;
+  public piechart;
   placeholder = 'Search by category name';
-  pageSize = 10;
+  pageSize = 100;
   page = 0;
   sort = 'created_at';
   sort_dir = 'desc';
   public categoriesCount = 0;
+  PieChart = [];
+  LineChart = [];
+
+  categoryData = [];
+  bgColors = [];
+
+  chartData = {
+    labels: [],
+    datasets: [{
+      label: 'Number Of Products per category',
+      data: this.categoryData,
+      backgroundColor: this.bgColors,
+    }]
+  };
+
 
   doneViewingDetails() {
     this.showingCategoryDetails = false;
@@ -62,6 +81,15 @@ export class CategoriesListComponent implements OnInit {
         this.categoriesFetched = true;
         this.categoriesCount = data.category_count;
         this.categories = data.categories;
+        data.categories.forEach(category => {
+          this.chartData.labels.push(category.name);
+          this.categoryData.push(category.product_count);
+          this.bgColors.push(this.getRandomColor());
+        });
+        this.PieChart = new Chart('linechart', {
+          type: 'pie',
+          data: this.chartData
+        });
       },
       error => {
         this.categoriesFetched = true;
@@ -70,6 +98,15 @@ export class CategoriesListComponent implements OnInit {
           verticalPosition: 'top'
         });
       });
+  }
+
+  getRandomColor() {
+    const letters = '0123456789ABCDEF'.split('');
+    let color = '#';
+    for (let i = 0; i < 6; i++ ) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 
   categoryUpdated(category) {
@@ -96,7 +133,7 @@ export class CategoriesListComponent implements OnInit {
   deleteCategory(id) {
     this.categoryService.deleteCategories(id).subscribe(
       data => {
-        this.categories = this.categories.filter(function (value, index, arr) {
+        this.categories = this.categories.filter(function (value) {
           return value.id !== id;
         });
       },

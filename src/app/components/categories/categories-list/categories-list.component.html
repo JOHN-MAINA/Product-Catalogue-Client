@@ -14,7 +14,15 @@
         <app-category-details *ngIf="showingCategoryDetails" [category]="selectedCategory"
                               (doneViewingDetailsEvent)="doneViewingDetails()"></app-category-details>
 
-        <div *ngIf="categoriesFetched && !editingCategory && !showingCategoryDetails">
+        <div fxLayout="row" *ngIf="!editingCategory && !showingCategoryDetails">
+          <mat-card fxFlex="100%">
+            <mat-card-content style="height: 20%">
+              <canvas id="linechart">{{ LineChart }}</canvas>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div *ngIf="categoriesFetched && !editingCategory && !showingCategoryDetails" fxLayoutGap="20px">
 
           <div
             style="z-index:5; position:fixed;display:flex;align-self: flex-end;bottom: 10%; right: 15px; margin-bottom:15px;">
