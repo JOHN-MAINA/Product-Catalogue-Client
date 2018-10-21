@@ -95,6 +95,45 @@ describe('ProductService', () => {
 
     const req = httpMock.expectOne(service.getFullPath('products'));
     expect(req.request.method).toBe('POST');
-    req.flush(createdProduct);
+    req.flush(createdProduct, { status: 201, statusText: 'Ok' });
+  });
+
+  it('should update product', (done: DoneFn) => {
+    const updatedProduct: Product = {
+      id: 2,
+      name: 'product 2',
+      category: {
+        id: 2,
+        name: 'Category Name',
+        product_count: 2,
+        created_at: '2018-10-14T20:03:03.959263402+03:00',
+        updated_at: '2018-10-08T09:30:19+03:00'
+      },
+      category_id: 2,
+      created_at: '2018-10-14T20:03:03.959263402+03:00',
+      updated_at: '2018-10-08T09:30:19+03:00'
+    };
+
+    service.updateProduct(updatedProduct, updatedProduct.id).subscribe(product => {
+      expect(product).toEqual(updatedProduct);
+      done();
+    });
+
+    const req = httpMock.expectOne(service.getFullPath('products/' + updatedProduct.id));
+    expect(req.request.method).toBe('PUT');
+    req.flush(updatedProduct, { status: 200, statusText: 'Ok' });
+  });
+
+  it('should delete product', (done: DoneFn) => {
+    const productId = 2;
+    const returnMessage = 'Product Deleted';
+    service.deleteProduct(productId).subscribe(product => {
+      expect(product).toEqual(returnMessage);
+      done();
+    });
+
+    const req = httpMock.expectOne(service.getFullPath('products/' + productId));
+    expect(req.request.method).toBe('DELETE');
+    req.flush(returnMessage, { status: 204, statusText: 'Ok' });
   });
 });
