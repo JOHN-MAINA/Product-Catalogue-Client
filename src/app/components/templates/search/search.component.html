@@ -6,7 +6,8 @@
     </mat-error>
   </mat-form-field>
   <div>
-    <button mat-stroked-button color="primary" (click)="emitSearchEvent()" [disabled]="name.invalid ">Search
+    <button mat-stroked-button color="primary" (click)="emitSearchEvent()" [disabled]="name.invalid || search === ''">
+      Search
     </button>
   </div>
 </div>
