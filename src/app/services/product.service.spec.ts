@@ -1,9 +1,9 @@
-import {TestBed, inject } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
 import {ProductService} from './product.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Product, ProductWithCount} from './product';
-import {Category} from './category';
+import {globals} from '../config/env';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -135,5 +135,14 @@ describe('ProductService', () => {
     const req = httpMock.expectOne(service.getFullPath('products/' + productId));
     expect(req.request.method).toBe('DELETE');
     req.flush(returnMessage, { status: 204, statusText: 'Ok' });
+  });
+
+  it('should return correct full path', () => {
+    const fullPath = globals.SERVER_URL + 'endpoint';
+
+    const generatedFullPath = service.getFullPath('endpoint');
+
+    expect(generatedFullPath).toBe(fullPath);
+    expect(generatedFullPath).toContain('endpoint');
   });
 });
