@@ -2,8 +2,8 @@ import {TestBed, inject } from '@angular/core/testing';
 
 import {ProductService} from './product.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Category} from './category';
 import {Product, ProductWithCount} from './product';
+import {Category} from './category';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -26,7 +26,7 @@ describe('ProductService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should retrieve products from the api via GET', () => {
+  it('should retrieve products from the api via GET', (done: DoneFn) => {
       const dummyProducts: ProductWithCount = {
         products: [
           {
@@ -64,10 +64,37 @@ describe('ProductService', () => {
       service.getProducts('products').subscribe(products => {
         expect(products.products.length).toBe(2);
         expect(products).toEqual(dummyProducts);
+        done();
       });
 
-      const request = httpMock.expectOne('products');
-      expect(request.request.method).toBe('GET');
-      request.flush(dummyProducts);
+    const req = httpMock.expectOne(service.getFullPath('products'));
+    expect(req.request.method).toBe('GET');
+    req.flush(dummyProducts);
+  });
+
+  it('should create product', (done: DoneFn) => {
+    const createdProduct: Product = {
+      id: 2,
+      name: 'product 2',
+      category: {
+        id: 2,
+        name: 'Category Name',
+        product_count: 2,
+        created_at: '2018-10-14T20:03:03.959263402+03:00',
+        updated_at: '2018-10-08T09:30:19+03:00'
+      },
+      category_id: 2,
+      created_at: '2018-10-14T20:03:03.959263402+03:00',
+      updated_at: '2018-10-08T09:30:19+03:00'
+    };
+
+    service.createProduct(createdProduct).subscribe(product => {
+      expect(product).toEqual(createdProduct);
+      done();
+    });
+
+    const req = httpMock.expectOne(service.getFullPath('products'));
+    expect(req.request.method).toBe('POST');
+    req.flush(createdProduct);
   });
 });

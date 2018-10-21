@@ -27,7 +27,7 @@ export class EditCategoryComponent implements OnInit {
 
     this.categoryService.updateCategory(category, this.localCategory.id).subscribe(
       data => {
-        this.snackBar.open('Category Added successfully', '', {
+        this.snackBar.open('Category Updated successfully', '', {
           duration: 5000,
           verticalPosition: 'top'
         });

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, NgModule, OnInit, Output} from '@angular/core';
 import {Product} from '../../../services/product';
 import {MatSnackBar} from '@angular/material';
 import {ProductService} from '../../../services/product.service';
