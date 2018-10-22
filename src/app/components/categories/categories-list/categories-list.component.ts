@@ -145,8 +145,8 @@ export class CategoriesListComponent implements OnInit {
       });
   }
 
-  editCategory(product) {
-    this.selectedCategory = product;
+  editCategory(category) {
+    this.selectedCategory = category;
     this.editingCategory = true;
   }
 
