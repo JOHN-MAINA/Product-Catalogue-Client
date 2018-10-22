@@ -14,7 +14,6 @@ import {Router} from '@angular/router';
 export class AddProductComponent implements OnInit {
 
   public categoriesFetched = false;
-  public updatingProduct = false;
 
   public categories: Category[] = [];
 

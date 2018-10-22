@@ -39,4 +39,12 @@ describe('ProductDetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should terminate viewing product details', function () {
+    component.headBack();
+
+    component.productEvent.subscribe(event => {
+      expect(event).toBe('');
+    });
+  });
 });

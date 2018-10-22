@@ -98,7 +98,7 @@ describe('ProductsListComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should update product', () => {
+  it('should select a product for update', () => {
     const updateProduct = {
       id: 2,
       name: 'product 2',
