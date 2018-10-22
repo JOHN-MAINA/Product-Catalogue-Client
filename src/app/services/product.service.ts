@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {globals} from '../config/env';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Product, ProductWithCount} from './product';
-import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,42 +18,18 @@ export class ProductService {
 
   getProducts(params): Observable<ProductWithCount> {
     // @ts-ignore
-    return this.http.get<ProductWithCount>(this.getFullPath('products'), params)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.get<ProductWithCount>(this.getFullPath('products'), params);
   }
 
   createProduct(data): Observable<Product> {
-    return this.http.post<Product>(this.getFullPath('products'), data)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.post<Product>(this.getFullPath('products'), data);
   }
 
   updateProduct(data, id): Observable<Product> {
-    return this.http.put<Product>(this.getFullPath('products/' + id), data)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.put<Product>(this.getFullPath('products/' + id), data);
   }
 
   deleteProduct(id): Observable<string> {
-    return this.http.delete<string>(this.getFullPath('products/' + id))
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    return throwError(
-      `Something bad happened; please try again later`);
+    return this.http.delete<string>(this.getFullPath('products/' + id));
   }
 }

@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { MaterialModule} from './material';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {LayoutModule} from '@angular/cdk/layout';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {EditCategoryComponent} from './components/categories/edit-category/edit-category.component';
 import {FormsModule} from '@angular/forms';
 import {EditProductComponent} from './components/products/edit-product/edit-product.component';
 import {PaginatorComponent} from './components/templates/paginator/paginator.component';
 import {SearchComponent} from './components/templates/search/search.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
+import {ProductCatalogueIntercepter} from './services/product-catalogue-intercepter';
+import {DeleteDialogComponent} from './components/templates/delete-dialog/delete-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,8 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
     EditProductComponent,
     PaginatorComponent,
     SearchComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,14 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  entryComponents: [DeleteDialogComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ProductCatalogueIntercepter,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

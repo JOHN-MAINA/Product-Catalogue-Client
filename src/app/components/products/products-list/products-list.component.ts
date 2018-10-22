@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Product, ProductWithCount} from '../../../services/product';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {ProductService} from '../../../services/product.service';
+import {DeleteDialogComponent} from '../../templates/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-products-list',
@@ -19,7 +20,7 @@ export class ProductsListComponent implements OnInit {
   public products: Product[];
   public selectedProduct;
 
-  constructor(private productService: ProductService, public snackBar: MatSnackBar) {
+  constructor(private productService: ProductService, public snackBar: MatSnackBar, public dialog: MatDialog) {
   }
   displayedColumns: string[] = ['name', 'category', 'created_at', 'edit', 'visibility', 'delete'];
   productsCount = 100;
@@ -99,19 +100,29 @@ export class ProductsListComponent implements OnInit {
     this.editingProduct = true;
   }
 
-  deleteProduct(id) {
-    this.productService.deleteProduct(id).subscribe(
-      data => {
-        this.products = this.products.filter(function (value) {
-          return value.id !== id;
-        });
-      },
-      error => {
-        this.snackBar.open(error, '', {
-          duration: 5000,
-          verticalPosition: 'top'
-        });
-      });
+  deleteProduct(product) {
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '250px',
+      data: {type: 'Product', name: product.name, confirmed: false}
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.productService.deleteProduct(product.id).subscribe(
+          data => {
+            this.products = this.products.filter(function (value) {
+              return value.id !== product.id;
+            });
+          },
+          error => {
+            this.snackBar.open(error, '', {
+              duration: 5000,
+              verticalPosition: 'top'
+            });
+          });
+      }
+    });
   }
 
   ngOnInit() {

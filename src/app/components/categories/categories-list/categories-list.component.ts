@@ -1,9 +1,9 @@
-import {Component, ElementRef, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoryService} from '../../../services/category.service';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {Category} from '../../../services/category';
 import {Chart} from 'chart.js';
-import {element} from 'protractor';
+import {DeleteDialogComponent} from '../../templates/delete-dialog/delete-dialog.component';
 
 // @ts-ignore
 @Component({
@@ -14,7 +14,7 @@ import {element} from 'protractor';
 
 export class CategoriesListComponent implements OnInit {
 
-  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar) {
+  constructor(private categoryService: CategoryService, public snackBar: MatSnackBar, public dialog: MatDialog) {
   }
 
   public displayedColumns: string[] = ['name', 'product_count', 'created_at', 'edit', 'visibility', 'delete'];
@@ -129,20 +129,32 @@ export class CategoriesListComponent implements OnInit {
     this.showingCategoryDetails = true;
   }
 
-  deleteCategory(id) {
-    this.categoryService.deleteCategories(id).subscribe(
-      data => {
-        this.categories = this.categories.filter(function (value) {
-          return value.id !== id;
-        });
-      },
-      error => {
-        this.snackBar.open(error, '', {
-          duration: 5000,
-          verticalPosition: 'top'
-        });
-      });
+  deleteCategory(category) {
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '250px',
+      data: {type: 'Category', name: category.name, confirmed: false}
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.categoryService.deleteCategories(category.id).subscribe(
+          data => {
+            this.categories = this.categories.filter(function (value) {
+              return value.id !== category.id;
+            });
+          },
+          error => {
+            this.snackBar.open(error, '', {
+              duration: 5000,
+              verticalPosition: 'top'
+            });
+          });
+      }
+    });
+
   }
+
 
   editCategory(category) {
     this.selectedCategory = category;
