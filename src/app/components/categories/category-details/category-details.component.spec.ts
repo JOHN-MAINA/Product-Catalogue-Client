@@ -45,4 +45,12 @@ describe('CategoryDetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should terminate viewing category details', function () {
+    component.headBack();
+
+    component.doneViewingDetailsEvent.subscribe(event => {
+      expect(event).toBe('');
+    });
+  });
 });
