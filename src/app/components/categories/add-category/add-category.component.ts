@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoryService} from '../../../services/category.service';
-import {Category} from '../../../services/category';
 import {MatSnackBar} from '@angular/material';
-import {FormControl, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 @Component({
@@ -12,7 +10,6 @@ import {Router} from '@angular/router';
 })
 export class AddCategoryComponent implements OnInit {
   public categoriesFetched = false;
-  public categories: Category[] = [];
   public categoryName = '';
 
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar, private router: Router) {
@@ -43,18 +40,6 @@ export class AddCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getCategories({}).subscribe(
-      data => {
-        this.categoriesFetched = true;
-        this.categories = data.categories;
-      },
-      error => {
-        this.categoriesFetched = true;
-        this.snackBar.open(error, '', {
-          duration: 5000,
-          verticalPosition: 'top'
-        });
-      });
   }
 
 }

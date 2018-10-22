@@ -47,7 +47,6 @@ export class CategoriesListComponent implements OnInit {
     }]
   };
 
-
   doneViewingDetails() {
     this.showingCategoryDetails = false;
   }

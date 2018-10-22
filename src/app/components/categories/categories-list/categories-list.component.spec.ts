@@ -72,6 +72,17 @@ describe('CategoriesListComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should initialize categories', function () {
+    const spy = spyOn(service, 'getCategories').and.callFake(() => {
+      return from([expectedCategories]);
+    });
+    fixture.componentInstance.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+    expect(component.categories).toEqual(expectedCategories.categories);
+    expect(component.categories.length).toBe(2);
+    expect(component.categoriesFetched).toBeTruthy();
+  });
+
   it('should return categories with count', () => {
     const spy = spyOn(service, 'getCategories').and.callFake(() => {
       return from([expectedCategories]);
@@ -106,6 +117,18 @@ describe('CategoriesListComponent', () => {
     fixture.componentInstance.editCategory(updateCategory);
     expect(component.selectedCategory).toBe(updateCategory);
     expect(component.editingCategory).toBeTruthy();
+  });
+
+  it('should search categories', function () {
+
+    const spy = spyOn(service, 'getCategories').and.callFake(() => {
+      return from([expectedCategories]);
+    });
+    fixture.componentInstance.searchCategory('searchPhrase');
+    expect(spy).toHaveBeenCalled();
+    expect(component.categories).toEqual(expectedCategories.categories);
+    expect(component.categories.length).toBe(2);
+    expect(component.categoriesFetched).toBeTruthy();
   });
 
   it('should show category details', () => {
@@ -154,5 +177,16 @@ describe('CategoriesListComponent', () => {
     expect(component.categories).toEqual(expectedCategories.categories);
     expect(component.categories.length).toBe(2);
     expect(component.categoriesFetched).toBeTruthy();
+  });
+
+  it('should return a random color', function () {
+    const color = component.getRandomColor();
+    expect(color).toContain('#');
+    expect(color.length).toBe(7);
+  });
+
+  it('should should update showingCategoryDetails when event emitted', function () {
+    component.doneViewingDetails();
+    expect(component.showingCategoryDetails).toBeFalsy();
   });
 });
