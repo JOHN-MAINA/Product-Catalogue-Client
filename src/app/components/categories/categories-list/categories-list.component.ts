@@ -129,6 +129,21 @@ export class CategoriesListComponent implements OnInit {
     this.showingCategoryDetails = true;
   }
 
+  deleteCategoryAfterConfirmed(category) {
+    this.categoryService.deleteCategories(category.id).subscribe(
+      data => {
+        this.categories = this.categories.filter(function (value) {
+          return value.id !== category.id;
+        });
+      },
+      error => {
+        this.snackBar.open(error, '', {
+          duration: 5000,
+          verticalPosition: 'top'
+        });
+      });
+  }
+
   deleteCategory(category) {
 
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
@@ -138,18 +153,7 @@ export class CategoriesListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.categoryService.deleteCategories(category.id).subscribe(
-          data => {
-            this.categories = this.categories.filter(function (value) {
-              return value.id !== category.id;
-            });
-          },
-          error => {
-            this.snackBar.open(error, '', {
-              duration: 5000,
-              verticalPosition: 'top'
-            });
-          });
+        this.deleteCategoryAfterConfirmed(category);
       }
     });
 

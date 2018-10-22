@@ -14,6 +14,19 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {from} from 'rxjs';
 import {CategoryWithCount} from '../../../services/category';
 import {CategoryService} from '../../../services/category.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {DeleteDialogComponent} from '../../templates/delete-dialog/delete-dialog.component';
+import {NgModule} from '@angular/core';
+
+@NgModule({
+  declarations: [DeleteDialogComponent],
+  imports: [MaterialModule],
+  entryComponents: [
+    DeleteDialogComponent,
+  ]
+})
+class TestModule {
+}
 
 describe('CategoriesListComponent', () => {
   let component: CategoriesListComponent;
@@ -50,13 +63,15 @@ describe('CategoriesListComponent', () => {
         EditCategoryComponent,
         ProductsListComponent,
         ProductDetailsComponent,
-        EditProductComponent
+        EditProductComponent,
       ],
       imports: [
         MaterialModule,
         FormsModule,
-        HttpClientTestingModule
-      ]
+        HttpClientTestingModule,
+        BrowserAnimationsModule,
+        TestModule
+      ],
     })
       .compileComponents();
   }));
@@ -95,13 +110,19 @@ describe('CategoriesListComponent', () => {
   });
 
   it('should delete category', () => {
-    const deletedCategoryId = 2;
+    const deleteCategory = {
+      id: 2,
+      name: 'category 1',
+      product_count: 6,
+      created_at: '2018-10-14T20:03:03.959263402+03:00',
+      updated_at: '2018-10-08T09:30:19+03:00'
+    };
     const returnMessage = 'Product successfully deleted';
 
     const spy = spyOn(service, 'deleteCategories').and.callFake(() => {
       return from([returnMessage]);
     });
-    fixture.componentInstance.deleteCategory(deletedCategoryId);
+    fixture.componentInstance.deleteCategoryAfterConfirmed(deleteCategory);
     expect(spy).toHaveBeenCalled();
   });
 

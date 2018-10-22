@@ -20,6 +20,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { NgModule} from '@angular/core';
+import {DeleteDialogComponent} from './components/templates/delete-dialog/delete-dialog.component';
 
 @NgModule({
   imports: [
@@ -62,7 +63,7 @@ import { NgModule} from '@angular/core';
     MatInputModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
   ]
 })
 export class MaterialModule { }
