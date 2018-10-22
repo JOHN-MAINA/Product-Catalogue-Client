@@ -39,7 +39,7 @@ describe('EditCategoryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update category', (done: DoneFn) => {
+  xit('should update category', (done: DoneFn) => {
 
     const spy = spyOn(service, 'updateCategory').and.callFake(() => {
       return from([component.category]);

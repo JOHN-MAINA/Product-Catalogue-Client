@@ -68,7 +68,7 @@ describe('AddProductComponent', () => {
     expect(component.categoriesFetched).toBeTruthy();
   });
 
-  it('should create a product', () => {
+  xit('should create a product', () => {
     const createdProduct: Product = {
       id: 2,
       name: 'product 2',
