@@ -5,10 +5,13 @@ import {MaterialModule} from '../../../material';
 import {FormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {from} from 'rxjs';
+import {CategoryService} from '../../../services/category.service';
 
 describe('EditCategoryComponent', () => {
   let component: EditCategoryComponent;
   let fixture: ComponentFixture<EditCategoryComponent>;
+  let service: CategoryService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,6 +24,7 @@ describe('EditCategoryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditCategoryComponent);
     component = fixture.componentInstance;
+    service = TestBed.get(CategoryService);
     component.category = {
       id: 1,
       name: 'Test Category',
@@ -33,5 +37,15 @@ describe('EditCategoryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should update category', (done: DoneFn) => {
+
+    const spy = spyOn(service, 'updateCategory').and.callFake(() => {
+      return from([component.category]);
+    });
+
+    component.updateCategory();
+    expect(spy).toHaveBeenCalled();
   });
 });
